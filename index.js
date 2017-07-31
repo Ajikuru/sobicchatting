@@ -16,7 +16,7 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
-io.configure('production',function(){
+/*io.configure('production',function(){
 		
 	io.enable('browser client minification');
 	io.enable('browser client etag');
@@ -29,7 +29,7 @@ io.configure('production',function(){
 		,'jsonp-polling'
 	]);
 
-});
+});*/
 
 
 app.use(express.static('./public'));
