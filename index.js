@@ -19,7 +19,7 @@ server.listen(port, function () {
 io.configure('production',function(){
 		
 	io.enable('browser client minification');
-	io.enable('browser client etat');
+	io.enable('browser client etag');
 	io.set('log level',1);
 	io.set('transports',[
 		'websocket'
