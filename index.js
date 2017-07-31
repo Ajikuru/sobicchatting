@@ -16,10 +16,10 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
-io.configure(function () {  
+/*io.configure(function () {  
   io.set("transports", ["xhr-polling"]); 
   io.set("polling duration", 10); 
-});
+});*/
 
 /*io.configure(function(){
 		
