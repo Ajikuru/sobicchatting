@@ -172,7 +172,7 @@ socket.on('user_login',function(data,callback){
 
 				socket.on('get_msg',function(data){
 
-					//console.log( data.user_id + data.rec_id + data.msg);
+				console.log("received get"); 	//console.log( data.user_id + data.rec_id + data.msg);
 
 			msg_sd = data.msg;
 			var snd_rr = data.user_id;
@@ -180,14 +180,18 @@ socket.on('user_login',function(data,callback){
 					
 	fs.readFile('./data.json','utf8',function readFileCallback(err,data){
 
+	if(err){throw err;}else{
+	
 		msg_read = JSON.parse(data); //now it object
 		
 		snd_msg_read = JSON.stringify(msg_read);
 
 	
-		console.log(snd_msg_read);
+		//console.log(socket.id);
 
 		io.sockets.connected[socket.id].emit('snd_get_msg',JSON.stringify(msg_read));
+	}		
+	
 
 		
 			});//readdata	
