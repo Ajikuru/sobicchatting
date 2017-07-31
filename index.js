@@ -128,6 +128,54 @@ socket.on('user_login',function(data,callback){
 });	
 
 });
+	
+
+	socket.on('reg_user',function(data,callback){
+
+	var reg_id = data.reg_usr_id;
+	var reg_name = data.reg_usr_name;
+	var reg_pwd = data.reg_usr_pwd;
+
+
+
+	fs.readFile('./user.json','utf8',function readFileCallback(err,data_rv){
+
+	if(err){
+		console.log(err);
+	}else{
+			
+			reg_js = JSON.parse(data_rv);			
+
+		if(reg_id in reg_js){
+			//console.log("yess");
+			callback(true);
+		}else{
+
+	
+		//reg_js[reg_id] = {conn_stat: 'offline', sockeid:'',details:{name:reg_name,pwd:reg_pwd}};
+		reg_js[reg_id] = {conn_stat: 'offline', sockeid:'',name:reg_name,pwd:reg_pwd,usr_unred:''};
+		json = JSON.stringify(reg_js);
+		fs.writeFile('./user.json',json,'utf8',function(){
+
+			callback(false);		
+		});
+			
+			//console.log("no");
+		}	
+
+
+	}
+
+});	
+
+
+});
+	
+	
+	
+	
+	
+	
 
 //console.log(users); 
 		//console.log("Yess");
