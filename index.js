@@ -100,7 +100,7 @@ socket.on('user_login',function(data,callback){
 
 		var id_sock = users_chk_aft[id_usr].sockeid;
 		
-		console.log(users_chk_aft);
+		//console.log(users_chk_aft);
 		//console.log(socket.id);
 		//console.log(id_sock);
 	io.sockets.connected[id_sock].emit('user_list',{keys:Object.keys(users_chk_aft),val:Object.values(users_chk_aft)});	
@@ -208,8 +208,8 @@ socket.on('user_login',function(data,callback){
 	
 	//console.log(users); 
 		//console.log("Yess");
-		//console.log(Object.keys(io.sockets.sockets));
-		//console.log(Object.values(io.sockets.sockets));
+		console.log(Object.keys(io.sockets.sockets));
+		console.log(Object.values(io.sockets.sockets));
 
 });	
 
