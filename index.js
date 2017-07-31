@@ -169,7 +169,12 @@ socket.on('user_login',function(data,callback){
 });	
 //stop tag register
 		
+	
 
+});
+	
+	
+	
 				socket.on('get_msg',function(data){
 
 				console.log("received get"); 	//console.log( data.user_id + data.rec_id + data.msg);
@@ -199,11 +204,7 @@ socket.on('user_login',function(data,callback){
 
 
 		
-	});//getmessage
-	
-		
-
-});
+	});//getmessage	
 	
 	
 	//console.log(users); 
