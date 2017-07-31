@@ -87,7 +87,7 @@ socket.on('reg_user',function(data,callback){
 
 
 
-socket.on('./user_login',function(data,callback){
+socket.on('user_login',function(data,callback){
 
 	id_usr = data.usr_id;
 	pwd_usr = data.usr_pwd;	
