@@ -16,7 +16,12 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
-/*io.configure('production',function(){
+/*io.configure(function () {  
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});*/
+
+io.configure(function(){
 		
 	io.enable('browser client minification');
 	io.enable('browser client etag');
@@ -28,8 +33,9 @@ server.listen(port, function () {
 		,'xhr-polling'
 		,'jsonp-polling'
 	]);
+	io.set("polling duration", 10);
 
-});*/
+});
 
 
 app.use(express.static('./public'));
