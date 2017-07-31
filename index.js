@@ -16,6 +16,21 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+io.configure('production',function(){
+		
+	io.enable('browser client minification');
+	io.enable('browser client etat');
+	io.set('log level',1);
+	io.set('transports',[
+		'websocket'
+		, 'flashsocket'
+		,'htmlfile'
+		,'xhr-polling'
+		,'jsonp-polling'
+	]);
+
+});
+
 
 app.use(express.static('./public'));
 
