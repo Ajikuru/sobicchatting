@@ -207,6 +207,113 @@ socket.on('user_login',function(data,callback){
 	});//getmessage	
 	
 	
+	socket.on('send-msg',function(data,callback){
+
+			console.log(data.user_id + data.usr_name + data.msg + data.rec_id);
+	
+			rc_id = data.rec_id;
+
+			usr_id = data.user_id;
+		var msg_sd = data.msg;
+		var usr_conv = data.user_id + data.rec_id;	
+
+
+			fs.readFile('./data.json','utf8',function readFileCallback(err,data_msg){
+
+				var obj_megs = JSON.parse(data_msg);
+
+				conv_id = Object.keys(obj_megs.conversation).length;
+				var new_idd = conv_id +1;
+				//console.log(new_idd + msg_sd + usr_conv);
+				obj_megs.conversation.push({"id": new_idd, "conv_usr":usr_conv, "msg":msg_sd}); 
+
+				snd_mesg = JSON.stringify(obj_megs);
+				var snd_mesgg = JSON.stringify(obj_megs);
+
+				fs.writeFile('./data.json',snd_mesg,'utf8',function(err){
+					if(err){
+						console.log(err);
+					}else{
+
+				fs.readFile('./user.json','utf8',function readFileCallback(err,data_usr){
+
+					var get_usr = JSON.parse(data_usr);
+
+					var recv_sock = get_usr[rc_id].sockeid;
+
+
+					if(!io.sockets.connected[recv_sock]){
+							console.log("Not connected id");
+
+					fs.writeFile('./data.json',snd_mesgg,'utf8',function(err){
+							if(err){ console.log(err); }else{
+							
+
+	/*						fs.writeFile('user.json',json,'utf8',function(err,data,new_id){
+});*/
+
+								delever_unread(rc_id);
+							}
+						});
+							
+					}else{
+						io.sockets.connected[recv_sock].emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:msg_sd});	
+						console.log("Connected id" + recv_sock);
+//							callback(true);
+							delever_unread(rc_id);
+					}
+					
+					//io.sockets.connected[recv_sock].emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:msg_sd});
+
+
+				});	
+						//console.log("saved");
+
+
+
+					}
+
+				});
+				
+
+				
+			});
+					//use thiss
+					
+
+function delever_unread(rc_id){
+fs.readFile('./user.json','utf8',function readFileCallback(err,data_r){
+
+	if(err){
+		console.log(err);
+	}else{
+		obj_usr_ur = JSON.parse(data_r); //now it object
+			obj_usr_ur[rc_id].usr_unred;
+			console.log("check red" + obj_usr_ur[rc_id].usr_unred);
+			var un_ef = obj_usr_ur[rc_id].usr_unred ;
+
+			  if(un_ef==""){
+			  	obj_usr_ur[rc_id].usr_unred = 1;
+			  	console.log(obj_usr_ur[rc_id].usr_unred);
+			  }else{
+			  	obj_usr_ur[rc_id].usr_unred += 1;
+			  }
+
+		var eff_obj_r_j = JSON.stringify(obj_usr_ur);
+		fs.writeFile('./user.json',eff_obj_r_j,'utf8',function(err){
+
+			if(err){throw err;}else{ callback(true); }
+		});
+	}
+
+});
+}  //CLOSE FUNCTION 
+
+			});// CLOSE SEND MESAGE	
+	
+	
+	
+	
 	//console.log(users); 
 		//console.log("Yess");
 		console.log(Object.keys(io.sockets.sockets));
