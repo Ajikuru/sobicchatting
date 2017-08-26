@@ -1,0 +1,35 @@
+<html>
+	<head><title>hell</title></head>
+	<body style="background-color:red">
+	<h1>hello</h1>
+	</body>
+	
+</html>
+<div class = "content">
+<link href="chatbox.css" rel="stylesheet">
+<div id="chat" class="animated-chat tada" onclick="loadChatbox()" style="float:right">Chat</div>
+<div class="chatbox" id="chatbox" style="width:500px;">
+<span class="chat-text" style="background-color:#3498db; border-radius:5px; padding:10px; color:white">Talk to Co-workers!</span>
+<script>
+//<![CDATA[
+document.write('<div id="smartchatbox_img901621879" style="width: 280px;  height: 500px;  width:600px; overflow: hidden; margin-right:0px; auto; padding: 0;">');
+document.write('<div id="smartchatbox901621879" style="width: 300px;  height: 500px; width:600px; float:left; overflow: hidden; margin-top:0px; auto; padding:0 0 0 0; border:0; ">');
+//document.write('<iframe src="https://www3.smartchatbox.com/shoutbox/sb.php?key=901621879" scrolling="no" frameborder="0" width="280px" height="450px" style="border:0; margin:0; padding: 0;">');
+document.write('<iframe src="./index.php" scrolling="no" frameborder="0" width="600px" height="460px" style="border:0; margin-top:10px; margin-left:-60px; bottom:0px; float:left; padding: 0;">');
+//document.write('<iframe src="./index.php" scrolling="no" frameborder="0" width="280px" height="450px" style="border:0; margin:0px; padding: 0;">');
+document.write('</iframe></div></div>');
+//]]>
+</script>
+<div id="close-chat" onclick="closeChatbox()">&times;</div>
+<div id="minim-chat" onclick="minimChatbox()"><span class="minim-button">&minus;</span></div>
+<div id="maxi-chat" onclick="loadChatbox()"><span class="maxi-button">&plus;</span></div>
+</div>
+
+<script>
+//<![CDATA[
+function loadChatbox(){var e=document.getElementById("minim-chat");e.style.display="block";var e=document.getElementById("maxi-chat");e.style.display="none";var e=document.getElementById("chatbox");e.style.margin="0";}
+function closeChatbox(){var e=document.getElementById("chatbox");e.style.margin="0 0 -1500px 0";}
+function minimChatbox(){var e=document.getElementById("minim-chat");e.style.display="none";var e=document.getElementById("maxi-chat");e.style.display="block";var e=document.getElementById("chatbox");e.style.margin="0 0 -460px 0";}
+//]]>
+</script>
+</div>
