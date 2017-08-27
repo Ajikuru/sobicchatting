@@ -123,7 +123,7 @@
 
 body{
 	/*background:#16a085;*/
-	background:none;
+	/*background:white;*/
 	margin:0px;
 	height:900px;
 	font-family: sans-serif;
@@ -134,6 +134,7 @@ body{
 	right:20px;
 	bottom:0px;
 	width:250px;
+	box-shadow: 0 4px 8px 0 rgb(0,0,0,0.6), 0 6px 20px 0 rgb(0,0,0,0.19);
 }
 
 .chat_body{
@@ -157,6 +158,8 @@ body{
 	width:250px;
 	background:white;
 	border-radius:5px 5px 0px 0px;
+	box-shadow: 0 4px 8px 0 rgb(0,0,0,0.6), 0 6px 20px 0 rgb(0,0,0,0.19);
+
 }
 
 .msg_head{
