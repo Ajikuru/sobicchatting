@@ -15,16 +15,25 @@
   <body>
   
   <div class="chat_box">
-  <div class="chat_head"> Chat Box <span class="badge2" data-badge='50'></span></div>
+  <div class="chat_head"> Chat Box <span class="badge2" data-badge='50'></span><span style="margin-left: 25px;" id="chatter">Name</span></div>
 
 <div class="chat_body"> 
 <div class="log_wrap userr">
-  UserId:<input type="test" value="0001" id="usr_id" name=""/>
+  Department:<p><!--<input type="test" value="Account" id="usr_dept" name=""/>-->
+  <select name="usr_dept" id="usr_dept">
+      
+      <option value="DP01">Account</option>
+      <option value="DP02">Audit</option>
+
+  </select>
   <p>
-  User Password:<input type="test" value="raflex" id= "usr_pwd" name=""/>
+
+  UserId:<input type="test" value="" id="usr_id" name="" maxlength="4" />
+  <p>
+  User Password:<input type="password" value="" id= "usr_pwd" name=""/>
   <p>
   <input type="button" name="" id="login" value="Submit">
-  <span ><button type="button" id="Register">Not Yet Register</button></span>
+  <!--<span ><button type="button" id="Register">Not Yet Register</button></span>-->
 </div>
 
 <div class="reg_wrap userr">
