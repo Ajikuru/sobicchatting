@@ -16,6 +16,10 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+
+var user_dept = {"DP01":"DP01","DP02":"DP02"}
+
+
 /*io.configure(function () {  
   io.set("transports", ["xhr-polling"]); 
   io.set("polling duration", 10); 
@@ -118,6 +122,9 @@ socket.on('user_login',function(data,callback){
 	id_usr = data.usr_id;
 	pwd_usr = data.usr_pwd;	
 
+	usr_dept = data.usr_dep;
+	
+
 	fs.readFile('./user.json','utf8',function readFileCallback(err,data){
 
 	if(err){
@@ -139,13 +146,18 @@ socket.on('user_login',function(data,callback){
 					callback(true);
 				var obj_ar = {id:"usr_id"};
 
+		var loger_nam = users_chk[id_usr].name;
+
+		console.log(loger_nam);
+
 		users_chk[id_usr].conn_stat = 'Online';
 		users_chk[id_usr].sockeid = socket.id;
 		json = JSON.stringify(users_chk);
 
+		var usr_jon = socket.join(usr_dept);
 
-		
-		var dd = "hello";
+		//console.log(usr_jon);
+
 		
 		//console.log(new_id);
 		fs.writeFile('./user.json',json,'utf8',function(err,data){
@@ -187,7 +199,7 @@ socket.on('user_login',function(data,callback){
 		//console.log(users_chk_aft);
 		//console.log(users_unred);
 	//io.sockets.connected[id_sock].emit('user_list',{keys:Object.keys(users_chk_aft),val:Object.values(users_chk_aft),usr_unr_val:users_unred});	
-	io.sockets.connected[id_sock].emit('user_list',{keys:Object.keys(users_chk_aft),val:Object.values(users_chk_aft),usr_unr_key:Object.keys(users_unred),usr_unr_val:Object.values(users_unred)});	
+	io.sockets.connected[id_sock].emit('user_list',{keys:Object.keys(users_chk_aft),val:Object.values(users_chk_aft),usr_unr_key:Object.keys(users_unred),usr_unr_val:Object.values(users_unred),log_nam:loger_nam});	
 
 		//io.sockets.emit('user_list',{keys:Object.keys(users_chk_aft),val:Object.values(users_chk_aft)});	
 				});
@@ -236,7 +248,7 @@ socket.on('user_login',function(data,callback){
 
 		var conb = usr_dt_snd +usr_t_rd;
 		//console.log(usr_t_rd+usr_dt_snd);
-		console.log(conb);
+		//console.log(conb + "indicat");
 		
 
 		fs.readFile('./indicate.json','utf8',function readFileCallback(err,data_r_msg_unr){
@@ -376,7 +388,7 @@ socket.on('user_login',function(data,callback){
 	
 				socket.on('get_msg',function(data){
 
-				console.log("received get"); 	//console.log( data.user_id + data.rec_id + data.msg);
+				//console.log("received get"); 	//console.log( data.user_id + data.rec_id + data.msg);
 
 			msg_sd = data.msg;
 			var snd_rr = data.user_id;
@@ -408,13 +420,18 @@ socket.on('user_login',function(data,callback){
 	
 	socket.on('send-msg',function(data,callback){
 
-			console.log(data.user_id + data.usr_name + data.msg + data.rec_id);
+			console.log(data.user_id + data.msg + data.rec_id);
 	
 			rc_id = data.rec_id;
 
 			usr_id = data.user_id;
 		var msg_sd = data.msg;
 		var usr_conv = data.user_id + data.rec_id;	
+
+		var usr_snd_nam = data.snd_nam;
+
+		var rom_msg_conv = usr_snd_nam+': '+msg_sd;
+		console.log(usr_snd_nam + "emi ni" + rc_id);
 
 
 			fs.readFile('./data.json','utf8',function readFileCallback(err,data_msg){
@@ -424,7 +441,15 @@ socket.on('user_login',function(data,callback){
 				conv_id = Object.keys(obj_megs.conversation).length;
 				var new_idd = conv_id +1;
 				//console.log(new_idd + msg_sd + usr_conv);
-				obj_megs.conversation.push({"id": new_idd, "conv_usr":usr_conv, "msg":msg_sd}); 
+
+				if(rc_id in user_dept){
+				obj_megs.conversation.push({"id": new_idd, "conv_usr":usr_conv, "msg":rom_msg_conv}); 	
+				}else{
+				obj_megs.conversation.push({"id": new_idd, "conv_usr":usr_conv, "msg":msg_sd}); 	
+				}
+				
+
+
 
 				snd_mesg = JSON.stringify(obj_megs);
 				var snd_mesgg = JSON.stringify(obj_megs);
@@ -438,31 +463,40 @@ socket.on('user_login',function(data,callback){
 
 					var get_usr = JSON.parse(data_usr);
 
+					//console.log(rc_id);
 					var recv_sock = get_usr[rc_id].sockeid;
 
+				if(rc_id in user_dept){
+					
+//					io.sockets.in(rc_id).emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:rom_msg_conv});
+					socket.broadcast.to(rc_id).emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:rom_msg_conv});
 
-					if(!io.sockets.connected[recv_sock]){
+					//io.sockets.connected[recv_sock].emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:msg_sd});	
+					//console.log("room Chat" + usr_id + rc_id);
+
+
+				}else{
+
+						if(!io.sockets.connected[recv_sock]){
 							console.log("Not connected id");
 
 					fs.writeFile('./data.json',snd_mesgg,'utf8',function(err){
 							if(err){ console.log(err); }else{
 							
 
-	/*						fs.writeFile('user.json',json,'utf8',function(err,data,new_id){
-});*/
-
 								delever_unread(usr_id,rc_id);
 							}
 						});
 							
 					}else{
+
 						io.sockets.connected[recv_sock].emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:msg_sd});	
-						console.log("Connected id" + recv_sock);
-//							callback(true);
-							//delever_unread(usr_id,rc_id);
+						//console.log("Connected id" + recv_sock);
+
 					}
 					
-					//io.sockets.connected[recv_sock].emit('msg_usr',{usr_sd:usr_id,usr_rc:rc_id,msg:msg_sd});
+
+				}	
 
 
 				});	
